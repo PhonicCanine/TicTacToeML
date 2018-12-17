@@ -1,0 +1,420 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Tic Tac Toe
+</name>
+</assembly>
+<members>
+<member name="T:Tic_Tac_Toe.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Tic_Tac_Toe.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Tic_Tac_Toe.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:Tic_Tac_Toe.NeuralFunctionHandler">
+ <summary>
+ Houses functions needed for the Neural Network
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.NeuralFunctionHandler.ReturnRandomStrength">
+ <summary>
+ Returns a random neuron connection strength, between -1 and 1
+ </summary>
+ <returns>Strength, as double</returns>
+</member>
+<member name="T:Tic_Tac_Toe.Neural">
+ <summary>
+ Class for the overall Neural Network
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.kp">
+ <summary>
+ Constant proportion multiplier
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.ki">
+ <summary>
+ Constant integral multiplier
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.kd">
+ <summary>
+ Constant derivative multiplier
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.proportion">
+ <summary>
+ PID proportion
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.integral">
+ <summary>
+ PID integral
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.derivative">
+ <summary>
+ pid derivative
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neural.lastError">
+ <summary>
+ last PID error
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.Neural.errorPID(System.Int32)">
+ <summary>
+ changes the learning rate of the neural network based on how close it is to being accurate.
+ </summary>
+ <param name="errorNum">Closeness to the correct number as an integer scaled to 0, where 0 is perfect.</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neural.#ctor(System.Int32,System.Collections.Generic.List{System.Int32},System.Int32)">
+ <summary>
+ Create a new neural network with a top layer, (n) middle / hidden layers, and a bottom (output) layer. Uses Thread.Sleep to avoid multiple neurons being references of the same memory address.
+ </summary>
+ <param name="top">The number of neurons in the top (input) layer of the network (int)</param>
+ <param name="mid">A list containing the number of neurons in each layer beneath the top layer of the network (List<int>)</int></param>
+ <param name="output">The number of neurons in the output layer of the network.(int)</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neural.#ctor(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Creates a new neural network with only the number of neurons in each layer.
+ </summary>
+ <param name="top">Neurons in the top layer (int)</param>
+ <param name="mid">Neurons in the middle layer (int)</param>
+ <param name="output">Neurons in the output layer (int)</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neural.train(System.Collections.Generic.List{System.Double})">
+ <summary>
+ Trains the neurons in the neural network.
+ </summary>
+ <param name="expectedOutputs">The expected outputs of the last data put into the network.</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neural.respond(System.Collections.Generic.List{System.Double})">
+ <summary>
+ Call a response from the neural network.
+ </summary>
+ <param name="inputs">The direct inputs to place into the input layer of the network. Must be the same size as the input layer of the network. As a List of Doubles.</param>
+ <returns>Returns a list representing the response, where the higher the number at that index, the more certain the network is.</returns>
+</member>
+<member name="T:Tic_Tac_Toe.Neuron">
+ <summary>
+ Class for individual neurons
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.inputs">
+ <summary>
+ Inputs into this neuron, as a reference list to the neural inputs.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.weights">
+ <summary>
+ The weights to multiply the inputs by. Always the same length as the inputs.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.parent">
+ <summary>
+ The parent neural network. This contains the learning rate for the neural network, so must be available by reference.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.id">
+ <summary>
+ One of many things that had to be done to ensure that each neuron had a different pointer. Not used internally, but was used for debugging, and helps to keep each neuron distinct in memory.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.output">
+ <summary>
+ The output of this neuron.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.Neuron.neuralError">
+ <summary>
+ The error of this neuron. Used in training.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.Sigmoid(System.Double)">
+ <summary>
+ Returns results of sigmoid function, at a specific number. This is the activation strength of each neuron.
+ </summary>
+ <param name="at">The number to return the sigmoid at. (as a double)</param>
+ <returns>Results of the sigmoid function, at the parameter's value.</returns>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.#ctor(Tic_Tac_Toe.Neural@)">
+ <summary>
+ Creates a neuron without any inputs (this must be the input layer)
+ </summary>
+ <param name="network">The parent neural network.</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.#ctor(Tic_Tac_Toe.Neural@,System.Collections.Generic.List{Tic_Tac_Toe.Neuron}@)">
+ <summary>
+ Creates a neuron with a parent and the previous layer passed in. This must not be an input layer neuron.
+ </summary>
+ <param name="network">The parent neural network.</param>
+ <param name="prevLayer">Reference to the layer of neurons above this neuron.</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.respond">
+ <summary>
+ Goes through the above neurons by their output and multiplies by their weight, adding all this together, then generating an output based on this sum. Sets error to 0, because a different result means that this neuron must be trained again with the correct result, which should be different.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.setError(System.Double)">
+ <summary>
+ Sets the error of this neuron based on the correct output, compared to the output provided
+ </summary>
+ <param name="correct">The correct response as a double.</param>
+</member>
+<member name="M:Tic_Tac_Toe.Neuron.train">
+ <summary>
+ Trains this neuron, by changing the error of above neurons and changing the weights of the above neurons.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.board">
+ <summary>
+ The board in which all the tokens (x's and o's) are stored. Here, they are stored as 1 and -1, as this makes training the neural network more easy.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.playerName">
+ <summary>
+ The player's name, to be used in high scores, etc.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.hiddenLayers">
+ <summary>
+ Defines the hidden layers in the main neural network for Time Attack and Practice.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.network">
+ <summary>
+ Main neural network. Used in Time Attack, Practice and the home screen.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.homeScreenNetwork">
+ <summary>
+ Second neural network to play on the main screen.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.lastMove">
+ <summary>
+ The last mode made by the player. Used in Time Attack and Practice to train the neural network defensively.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.lastBoard">
+ <summary>
+ The last configuration of the board, so that it can be used to train the neural network.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.turns">
+ <summary>
+ Stores the number of turns in a timeAttack or Practice game. Can be used to improve neural network learning rates with a PID controller.
+ </summary>
+</member>
+<member name="T:Tic_Tac_Toe.GameScreen.gamemode">
+ <summary>
+ Provides the gamemodes that can be passed around the program, in a more readable state than pure integers.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.currentGamemode">
+ <summary>
+ Stores the current game mode. Automatically set to none on the home screen.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.makeNetwork">
+ <summary>
+ Calls functions to create the main neural network. Must be called each time Time Attack or Practice is launched so as to have the neural network start from a fair state.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.InitializeBoard">
+ <summary>
+ Initializes the board variable, and draws the board. Also sets turns to 0.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.PlayerWin">
+ <summary>
+ Called when the player (or X's) wins. In Practice and Time Attack this trains the neural network and restarts the game. In Multiplayer this restarts the game.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.ComputerWin">
+ <summary>
+ Called when the computer (or O's) wins. In Practice, this resets the board. In time attack this invalidates the time (so that further alerts don't display), and returns the player to the main menu. In multiplayer, this simply resets the board.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.DrawBoard">
+ <summary>
+ Draws the board. Places X's and O's. This is done programatically.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.CheckForWin(System.Int32[]@)">
+ <summary>
+ Checks whether the board has a winning combination on it, and calls the specific function to handle which player has won
+ </summary>
+ <param name="winPosition">Variable to place the winning board position (the location of the 3 matching symbols) in</param>
+ <returns>True if there has been a win, False if not</returns>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.train">
+ <summary>
+ Trains the main neural network
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.trainHomeScreen">
+ <summary>
+ trains the secondary neural network
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.GetNeuralResponse">
+ <summary>
+ Gets a response from the main neural network.
+ </summary>
+ <returns>Board Position as an integer</returns>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.GetMainMenuResponse">
+ <summary>
+ Gets a response from the second neural network (only available on the home screen)
+ </summary>
+ <returns>Board Position as an integer</returns>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.GameScreen_Load(System.Object,System.EventArgs)">
+ <summary>
+ Performs things needed at the very beginning of launching the game. This includes loading the player's name and loading any high scores.
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.CopyBoard">
+ <summary>
+ Copies the current state of the board deeply (by value) so that it can be used to train a neural network.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.nextTurnX">
+ <summary>
+ Is the X the next player to move in multiplayer mode?
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.xwins">
+ <summary>
+ stores the number of times X has won in multiplayer mode.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.owins">
+ <summary>
+ stores the number of times O has won in multiplayer mode.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.defaultTime">
+ <summary>
+ Stores the default time to reset to in timeAttack mode.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.time">
+ <summary>
+ Stores the remaining time in timeAttack mode.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.score">
+ <summary>
+ Stores the player's score in timeAttack mode.
+ </summary>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.consecutiveWins">
+ <summary>
+ Stores consecutive wins in practice mode.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.btn_Click(System.Object,System.EventArgs)">
+ <summary>
+ Called whenever a button on the board is called. Checks which gamemode is being played, and performs the appropriate actions.
+ </summary>
+ <param name="sender">Default onClick parameter. Used to calculate cell clicked.</param>
+ <param name="e">Default onClick parameter</param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.gameTied">
+ <summary>
+ Called when a multiplayer game ties.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.returnToMenu">
+ <summary>
+ Handles UI updates for bringing the game back to its default state.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.beginGame">
+ <summary>
+ Makes necessary UI updates to begin a game of any gamemode.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.btnPractice_Click(System.Object,System.EventArgs)">
+ <summary>
+ Calls necessary functions, and UI updates for a practice game.
+ </summary>
+ <param name="sender">Default onClick parameter</param>
+ <param name="e">Default onClick parameter</param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.btnMulti_Click(System.Object,System.EventArgs)">
+ <summary>
+ Calls necessary functions, and UI updates for a multiplayer game.
+ </summary>
+ <param name="sender">Default onClick parameter</param>
+ <param name="e">Default onClick parameter</param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.btnTimeAttk_Click(System.Object,System.EventArgs)">
+ <summary>
+ Calls necessary functions, and UI updates for a single-player time-attack game
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="T:Tic_Tac_Toe.GameScreen.displayColor">
+ <summary>
+ Provides readability for which color will be used when drawing a win onto the board.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.drawWin(Tic_Tac_Toe.GameScreen.displayColor,System.Int32[])">
+ <summary>
+ Draws a win onto the board.
+ </summary>
+ <param name="displayColor">The color that the win will be displayed as. Must be from the enum displayColor.</param>
+ <param name="winType">The board condition that led to a win. As an array of integers.</param>
+</member>
+<member name="F:Tic_Tac_Toe.GameScreen.lastGameWon">
+ <summary>
+ Stores whether the last game (on the homescreen) has been won. This allows it to pause for 1 cycle so that the user can see that there has been a win.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.mainMenuDemo">
+ <summary>
+ Runs a game pitting one neural network against another. Used to run the demo on the home screen of the game.
+ </summary>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.tmrHomeScreen_Tick(System.Object,System.EventArgs)">
+ <summary>
+ Calls the mainMenuDemo function when a gamemode is not selected (the user is on the home screen).
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.btnQuit_Click(System.Object,System.EventArgs)">
+ <summary>
+ Quits the current gamemode if it isn't none. This means resetting the UI, and returning to the home screen. Otherwise quits the game.
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Tic_Tac_Toe.GameScreen.timTimeAttk_Tick(System.Object,System.EventArgs)">
+ <summary>
+ Runs functions necessary to running the time attack mode. Essentially, lowers the time, and causes a game end if the remaining time reaches 0.
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+</members>
+</doc>
